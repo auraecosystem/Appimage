@@ -9,7 +9,7 @@
 8. Optional BCI / EEG layer
 ```
 
-```srcx
+```prog.bat
 polyglot-xr-stack/
 │
 ├── README.md
