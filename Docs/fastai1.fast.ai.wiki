@@ -1,11 +1,15 @@
-# visualize the Avatarrillence Engine MVP roadmap as a detailed Gantt-style timeline, showing dependencies, milestones, and overlaps for all layers. 
+# Avatarrillence
 
-# Alright, let’s visualize the Avatarrillence Engine MVP roadmap as a detailed Gantt-style timeline, showing dependencies, milestones, and overlaps for all layers. I’ll break it into six months / 26 weeks and include core engines, sensory input, AI/GNI, dream bridge, and persistence layers. This gives a complete picture of how development flows and how different modules interact.
-[![Avatarrillence](https://chatgpt.com/s/m_69d1c0d46e748191863e42c99c3d1d84.svg)
+visualize the Avatarrillence Engine MVP roadmap as a detailed Gantt-style timeline, showing dependencies, milestones, and overlaps for all layers. 
+
+_ Alright, let’s visualize the Avatarrillence Engine MVP roadmap as a detailed Gantt-style timeline, showing dependencies, milestones, and overlaps for all layers. I’ll break it into six months / 26 weeks and include core engines, sensory input, AI/GNI, dream bridge, and persistence layers. This gives a complete picture of how development flows and how different modules interact.
+
+ ![Avatarrillence](https://chatgpt.com/s/m_69d1c0d46e748191863e42c99c3d1d84)
+
 ⸻
 
 ## Avatarrillence Engine – Detailed Gantt-Style Timeline
-::```gantt```
+::``gantt``
 
 Week  | Core Engine       | Sensory Interface       | AI/GNI Engine        | Dream Bridge          | Persistence / Myth    | Milestones
 ------+------------------+------------------------+--------------------+---------------------+---------------------+-------------------------------
