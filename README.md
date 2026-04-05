@@ -1,3 +1,42 @@
+```asciidoc                  ┌────────────────────────────┐
+
+       HUMAN CONSCIOUSNESS    │
+                    │  perception / memory / self
+                    └─────────────┬──────────────┘
+                                  │
+                     Sensory / Neural / Dream Interface
+                                  │
+                                  ▼
+                    ┌────────────────────────────┐
+                    │    AVATARRILLENCE LAYER    │
+                    │ dream ingress / identity   │
+                    │ continuity / self-mapping  │
+                    └─────────────┬──────────────┘
+                                  │
+                                  ▼
+                    ┌────────────────────────────┐
+                    │       XR / CGI LAYER       │
+                    │ visual embodiment / world  │
+                    │ presence / avatar hosting  │
+                    └─────────────┬──────────────┘
+                                  │
+          ┌───────────────────────┼────────────────────────┐
+          ▼                       ▼                        ▼
+┌─────────────────┐   ┌─────────────────────┐   ┌──────────────────┐
+│   QuakeC VM     │   │    MuPAD Engine     │   │ Objective-J UI   │
+│ world entities  │   │ symbolic cognition  │   │ control / memory │
+│ motion / events │   │ geometry / formulas │   │ dashboard / HUD  │
+└────────┬────────┘   └──────────┬──────────┘   └────────┬─────────┘
+         │                       │                       │
+         └──────────────┬────────┴──────────────┬────────┘
+                        ▼                       ▼
+               ┌────────────────────────────────────┐
+               │  XTEND / JAVA / PYTHON MIDDLEWARE  │
+               │ state sync / AI / GNI / protocol   │
+               └────────────────────────────────────┘
+
+ ```              
+
 ```au3
 1. XR headset
 2. Eye tracking
