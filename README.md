@@ -1,4 +1,4 @@
-```conda-build
+```au3
 1. XR headset
 2. Eye tracking
 3. Full-body tracking
@@ -9,7 +9,7 @@
 8. Optional BCI / EEG layer
 ```
 
-```prog
+```srcx
 polyglot-xr-stack/
 │
 ├── README.md
@@ -204,3 +204,4 @@ polyglot-xr-stack/
     ├── objj/
     ├── matlab/
     └── local-bin/
+
