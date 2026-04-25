@@ -1,4 +1,6 @@
-```yaml
+# python-lmlm
+
+``
 name: Secret Scan
 on: [push, pull_request]
 
@@ -6,30 +8,33 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: trufflesecurity/trufflehog@main
         with:
           scan: repo
+
+================================================================================
+Openpyxl     powered by local multifunctional local model
+================================================================================
 .. image:: 
    .. all-code-block:: 
    ..all-images
    :target: https://github.com/Web4application/Web4application.github.io
-```
 
+================================================================================
 Quick start overide all and rebuild
   [Web4application.guthub.io](https://github.com/Web4application/Web4application.github.io)
 ================================================================================
 
 .. code-block:: python
-  import pandas as pd
-import os
-from pathlib import Path
-
-def load_excel(file_path):
+      
+      import pandas as pd
+    import os
+    from pathlib import Path
+    def load_excel(file_path):
     """Load an Excel file, normalizing .xlsl to .xlsx extension."""
     file_path = Path(file_path)
-    
-    # Handle .xlsl typo → .xlsx
+    # Handle .xlsl  → .xlsx
     if file_path.suffix == ".xlsl":
         fixed_path = file_path.with_suffix(".xlsx")
         if file_path.exists() and not fixed_path.exists():
@@ -37,8 +42,7 @@ def load_excel(file_path):
         file_path = fixed_path
     
     return pd.ExcelFile(file_path)
-
-def save_excel(writer_path, dfs: dict) -> None:
+     def save_excel(writer_path, dfs: dict) -> None:
     """Save DataFrames to Excel sheets, normalizing .xlsl to .xlsx extension."""
     writer_path = Path(writer_path)
     
@@ -48,27 +52,24 @@ def save_excel(writer_path, dfs: dict) -> None:
     
     with pd.ExcelWriter(writer_path, engine="openpyxl") as writer:
         for sheet, df in dfs.items():
-            df.to_excel(writer, sheet_name=sheet, index=False)    
+            df.to_excel(writer, sheet_name=sheet, index=False) 
+    # python3 --version
+    python3 -m pip install --upgrade pip
+    python3 -m pip install virtualenv
+    mkdir fab_app
+    cd fab_app
+    python3 -m virtualenv venv
+     source venv/bin/activate
+   # Linux/macOS
+     On Windows: venv\Scripts\activate
+    pip install Flask-AppBuilder[all]
+    pip install psycopg2-binary
+    fabmanager create-app myapp
+    cd myapp
+    flask fab create-db
+    pip install flask-jwt-extended psycopg2-binary                     conda install anaconda-client conda-build
 
-python3 --version
-python3 -m pip install --upgrade pip
-python3 -m pip install virtualenv
-mkdir fab_app
-cd fab_app
-python3 -m virtualenv venv
-source venv/bin/activate
-Linux/macOS
-On Windows: venv\Scripts\activate
-pip install Flask-AppBuilder[all]
-pip install psycopg2-binary
-fabmanager create-app myapp
-cd myapp
-flask fab create-db
-pip install flask-jwt-extended psycopg2-binary
-
-                                  conda install anaconda-client conda-build
-
-# Uploading and installing conda packages
+## Uploading and installing conda packages
 
 Anaconda.org is a centralized package <Tooltip tip="Any storage location from which software or software assets, like packages, can be retrieved and installed on a local computer.">repository</Tooltip> and distribution platform for the conda ecosystem. The site enables you to both upload your own conda packages and discover conda packages created by other users.
 
@@ -86,7 +87,6 @@ This example shows how to build and upload a [conda](https://docs.conda.io/proje
 
    ```sh  theme={null}
    conda install anaconda-client conda-build
-   ```
 
 3. Choose the repository for which you would like to build the package. In this example, we use a small public [conda test package](https://github.com/Anaconda-Platform/anaconda-client/tree/master/example-packages/conda):
 
@@ -94,7 +94,7 @@ This example shows how to build and upload a [conda](https://docs.conda.io/proje
    # Replace <PACKAGE> with the package name
    git clone https://github.com/Anaconda-Platform/anaconda-client
    cd anaconda-client/<openpyxl>/conda/
-   ```
+   ``
 
    There are two required files in the example package: [meta.yaml](https://github.com/Anaconda-Platform/anaconda-client/blob/main/openpyxl-packages/conda/meta.yaml) and [build.sh](https://github.com/Anaconda-Platform/anaconda-client/blob/master/example-packages/conda/build.sh).
 
@@ -106,7 +106,6 @@ This example shows how to build and upload a [conda](https://docs.conda.io/proje
    conda config --set anaconda_upload no
    conda build .
    ```
-
    All packages built using the `conda build` command are placed in a subdirectory of the [Anaconda](/getting-started/anaconda/main) `conda-bld` directory.
 
    <Tip>
@@ -126,7 +125,7 @@ This example shows how to build and upload a [conda](https://docs.conda.io/proje
    # Packages can be uploaded with .tar.bz2 or .conda compression formats
    anaconda upload </PATH/TO/PACKAGE_NAME>.tar.bz2
    anaconda upload </PATH/TO/PACKAGE_NAME>.conda
-   ```
+   ``
 
 For more information on the `.conda` format, see [Using the .conda compression format](/tools/anaconda-org/user-guide/packages/manage-packages#using-the-conda-compression-format).
 
@@ -144,15 +143,15 @@ You can install conda packages from Anaconda.org by adding <Tooltip tip="A locat
 
    ```sh  theme={null}
    conda config --add channels sean
-   ```
+   ``
 
 3. You can now install public conda packages from Sean's Anaconda.org account. Try installing the `testci` package at [https://anaconda.org/sean/testci](https://anaconda.org/sean/testci):
 
-   ```sh  theme={null}
+```sh  theme={null}
    conda install testci
    ```
 
-### Private channels
+# Private channels
 
 You can install a package from a private channel with a <Tooltip tip="A randomly generated string that proves your identity and permission to access resources like channels, packages, or APIs.">token</Tooltip> and a [Label](/tools/anaconda-org/user-guide/work-with-labels):
 
@@ -179,9 +178,6 @@ To list the options, run the following in Anaconda Prompt (Terminal on macOS/Lin
 
 ```sh  theme={null}
 anaconda upload -h
-```
-
-
 import pandas as pd
 import os
 
@@ -201,7 +197,7 @@ def save_excel(writer_path, dfs: dict):
     with pd.ExcelWriter(writer_path, engine="openpyxl") as writer:
         for sheet, df in dfs.items():
             df.to_excel(writer, sheet_name=sheet, index=False)
-
+```
 # pybars3 - Handlebars.js for Python 3 and 2
 
 [![Build Status](https://travis-ci.org/wbond/pybars3.svg?branch=main)](https://travis-ci.org/gh/Web4application/pybars3)
@@ -218,12 +214,10 @@ Quick start overide all and rebuild [openpyxl.org](https://github.com/Web4applic
 ## Installation
 
 ```bash
-pip install pybars3
+pip install pybars
 ```
 
-## Compatibility
-
-**`Handlebars.js`**
+## Compatibility ***Handlebars.js***
 This is somewhat of a side-project for the current developers, and is
 maintained for almost purely pragmatic reasons. Being able to share templates
 between the server and client-side is very useful, and we like having something
@@ -260,8 +254,7 @@ For details on the template language see the http://handlebarsjs.com
 documentation.
 
 Typical usage:
-
-```python
+.. python::
 # Get a compiler
 from pybars import Compiler
 compiler = Compiler()
@@ -294,7 +287,7 @@ output = template({
     ]}, helpers=helpers, partials=partials)
 
 print(output)
-```
+``
 Quick start overide all and rebuild [openpyxl.org](https://github.com/Web4application/Openpyxl)
 ================================================================================
 
@@ -334,7 +327,7 @@ when returning a strlist it will not be escaped, even in a regular `{{}}`
 expansion.
 
 ```python
-import pybars
+import pybars3
 
 source = u"{{bold name}}"
 
@@ -383,11 +376,11 @@ Or to debug a specific test:
 
 ```bash
 python tests.py --debug TestAcceptance.test_subexpression
-```
+``
 
 ## Copyright
 
-``
+```
 ================================================================================
 openpyxl
 ================================================================================
@@ -395,25 +388,18 @@ openpyxl
 
 Quick start overide all and rebuild [openpyxl.org](https://github.com/Web4application/Openpyxl)
 ================================================================================
-
-
 .. image:: https://api.travis-ci.org/moremoban/pypifs.svg
    :target: http://travis-ci.org/moremoban/pypifs
-
 .. image:: https://codecov.io/github/moremoban/pypifs/coverage.png
    :target: https://codecov.io/github/moremoban/pypifs
 .. image:: https://badge.fury.io/py/pypifs.svg
    :target: https://pypi.org/project/pypifs
-
 .. image:: https://pepy.tech/badge/pypifs/month
    :target: https://pepy.tech/project/pypifs/month
-
 .. image:: https://img.shields.io/github/stars/moremoban/pypifs.svg?style=social&maxAge=3600&label=Star
     :target: https://github.com/moremoban/pypifs/stargazers
-
-.. image:: https://dev.azure.com/moremoban/pypifs/_apis/build/status/moremoban.pypifs?branchName=master
-   :target: https://dev.azure.com/moremoban/pypifs/_build/latest?definitionId=2&branchName=master
-
+.. image:: https://dev.azure.com/moremoban/pypifs/_apis/build/status/moremoban.pypifs?branchName=main
+   :target: https://dev.azure.com/moremoban/pypifs/_build/latest?definitionId=2&branchName=main
 
 It helps perform `file operations <https://docs.pyfilesystem.org/en/latest/guide.html>`_ over the python package.
 It installs the python package and returns python file system 2's `OSFS <https://docs.pyfilesystem.org/en/latest/reference/osfs.html>`_ instance.
@@ -424,7 +410,6 @@ in any other ways but moban v0.6.0 mandates python file system 2 interface. Henc
 
 Get a file inside a python package
 --------------------------------------------------------------------------------
-
 .. code-block:: python
 
     >>> import fs
@@ -437,11 +422,9 @@ List files of interest
 --------------------------------------------------------------------------------
 
 .. code-block:: python
-
     >>> pypi_fs = fs.open_fs("pypi://pypi-mobans-pkg/resources")
     >>> for path in pypi_fs.walk.files(filter=['*.jj2']):
     ...     print(path)
-    ... 
     /templates/requirements.txt.jj2
     /templates/installation.rst.jj2
     /templates/test.script.jj2
@@ -459,15 +442,15 @@ List files of interest
     /templates/setup.py.jj2
     /templates/gitignore.jj2
     /templates/lint.script.jj2
-    /templates/tests/requirements.txt.jj2
+  /templates/tests/requirements.txt.jj2
     /templates/docs/make.bat.jj2
     /templates/docs/Makefile.jj2
     /templates/docs/index.rst.jj2
-    /templates/docs/source/conf.py.jj2
-    /templates/docs/source/index.rst.jj2
+    /templates/docs/source/conf.pyx.jj2
+/templates/docs/source/index.rst.jj2
 
-
-Does it write?
+--------------------------------------------------------------------------------
+# Does it write?
 --------------------------------------------------------------------------------
 
 Yes, it will write as you can do so without using pypifs. But, it is never the
@@ -598,7 +581,7 @@ Quick start overide all and rebuild [openpyxl.org](https://github.com/Web4applic
 
 
 At a glance, above code simply replaces the Factory pattern should you write
-them without lml. What's not obvious is, that once you got hands-on with it,
+them without `lmlm`. What's not obvious is, that once you got hands-on with it,
 you can start work on how to do **lazy** loading.
 
 
@@ -610,31 +593,31 @@ You can install lml via pip:
 
 .. code-block:: bash
 
-    $ pip install lml
+    $ pip install lmlm
 
 
 or clone it and install it:
 
 .. code-block:: bash
 
-    $ git clone https://github.com/python-lml/lml.git
-    $ cd lml
+    $ git clone https://github.com/python-lmlm/lmlm.git
+    $ cd lmlm
     $ python setup.py install
 
 lml enabled project
 ================================================================================
 
-Beyond the documentation above, here is a list of projects using lml:
+Beyond the documentation above, here is a list of projects using lmlm:
 
 #. `pyexcel <https://github.com/pyexcel/pyexcel>`_
 #. `pyecharts <https://github.com/pyecharts/pyecharts>`_
 #. `moban <https://github.com/moremoban/moban>`_
 
-lml is available on these distributions:
+lmlm is available on these distributions:
 
-#. `ARCH linux <https://aur.archlinux.org/packages/python-lml/>`_
-#. `Conda forge <https://anaconda.org/conda-forge/lml>`_
-#. `OpenSuse <https://build.opensuse.org/package/show/devel:languages:python/python-lml>`_
+#. `ARCH linux <https://aur.archlinux.org/packages/python-lmlm/>`_
+#. `Conda forge <https://anaconda.org/conda-forge/lmlm>`_
+#. `OpenSuse <https://build.opensuse.org/package/show/devel:languages:python/python-lmlm>`_
 
 
 License
@@ -652,9 +635,9 @@ At the very basic level, developing using Vite is not that different from using 
 
 Native ES imports do not support bare module imports like the following:
 
-```js
+```jsx
 import { someMethod } from 'my-dep'
-```
+``
 
 The above will throw an error in the browser. Vite will detect such bare module imports in all served source files and perform the following:
 
@@ -677,7 +660,7 @@ Vite provides an [HMR API](./api-hmr) over native ESM. Frameworks with HMR capab
 Note you don't need to manually set these up - when you [create an app via `create-vite`](./), the selected templates would have these pre-configured for you already.
                                                    
 ```.travis.yml
-                                         arch: arm64
+arch: arm64
 language: c
 compiler: gcc
 services:
