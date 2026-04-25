@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Web4 AI OS Core</title>
+
+<meta name="theme-color" content="#00d8ff"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="icon.png"/>
+
+<script src="flutter.js" defer></script>
+
+<style>
+body {
+  margin:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#0f0f0f;
+  color:#fff;
+  font-family:sans-serif;
+}
+
+.shell {
+  width:340px;
+  padding:40px;
+  border-radius:18px;
+  text-align:center;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+}
+
+.orb {
+  width:90px;
+  height:90px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  background: radial-gradient(circle, #00d8ff, #ff00c3);
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+
+.loader {
+  width:28px;
+  height:28px;
+  border:3px solid #fff;
+  border-top-color:#00d8ff;
+  border-radius:50%;
+  margin:20px auto;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to{transform:rotate(360deg);}
+}
+
+button {
+  margin-top:10px;
+  border:1px solid #00d8ff;
+  background:transparent;
+  color:#00d8ff;
+  padding:10px 16px;
+  border-radius:20px;
+  cursor:pointer;
+}
+button:hover{
+  background:#00d8ff;
+  color:#000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="shell">
+  <div class="orb"></div>
+  <h2>Web4 AI Core</h2>
+  <p id="status">Booting system...</p>
+  <div id="loader" class="loader"></div>
+
+  <button onclick="voice()">🎙 Voice</button>
+</div>
+
+<script>
+/* =========================
+   🔋 STATE ENGINE
+========================= */
+const STATE = {
+  LOADING:"loading",
+  READY:"ready",
+  ERROR:"error"
+};
+
+function setState(state,msg){
+  document.getElementById("status").innerText = msg;
+  if(state === STATE.READY){
+    document.getElementById("loader").style.display="none";
+  }
+}
+
+/* =========================
+   💾 MEMORY CORE (IndexedDB)
+========================= */
+class MemoryDB {
+  async init(){
+    return new Promise(res=>{
+      const req = indexedDB.open("web4_memory",1);
+      req.onupgradeneeded=()=>{
+        req.result.createObjectStore("mem",{keyPath:"id"});
+      };
+      req.onsuccess=()=>res(req.result);
+    });
+  }
+
+  async save(data){
+    const db = await this.init();
+    const tx = db.transaction("mem","readwrite");
+    tx.objectStore("mem").put({id:Date.now(),...data});
+  }
+
+  async getAll(){
+    const db = await this.init();
+    return new Promise(res=>{
+      const tx = db.transaction("mem","readonly");
+      const req = tx.objectStore("mem").getAll();
+      req.onsuccess=()=>res(req.result);
+    });
+  }
+}
+
+/* =========================
+   🔌 PLUGIN SYSTEM
+========================= */
+class Plugin {
+  constructor(name,match,run){
+    this.name=name;
+    this.match=match;
+    this.run=run;
+  }
+}
+
+/* =========================
+   🧠 AI AGENT CORE
+========================= */
+class Agent {
+  constructor(memory,plugins){
+    this.memory=memory;
+    this.plugins=plugins;
+  }
+
+  async think(input){
+    const context = await this.memory.getAll();
+
+    for(const p of this.plugins){
+      if(p.match(input)){
+        return await p.run(input,context);
+      }
+    }
+
+    return {output:"No plugin matched."};
+  }
+}
+
+/* =========================
+   🪪 IDENTITY LAYER
+========================= */
+class Identity {
+  async connect(){
+    if(!window.ethereum) return null;
+    const acc = await ethereum.request({method:"eth_requestAccounts"});
+    return acc[0];
+  }
+}
+
+/* =========================
+   🌐 SYNC BUS
+========================= */
+class Sync {
+  constructor(){
+    this.bus = new BroadcastChannel("web4");
+  }
+
+  send(data){
+    this.bus.postMessage(data);
+  }
+
+  listen(fn){
+    this.bus.onmessage=e=>fn(e.data);
+  }
+}
+
+/* =========================
+   🎙 VOICE INTERFACE
+========================= */
+function voice(){
+  if(!speechSynthesis) return;
+  const msg = new SpeechSynthesisUtterance("Web4 AI system active");
+  speechSynthesis.speak(msg);
+}
+
+/* =========================
+   ⚙️ SYSTEM INIT
+========================= */
+const memory = new MemoryDB();
+const identity = new Identity();
+const sync = new Sync();
+
+/* Plugins */
+const plugins = [
+
+  new Plugin(
+    "time",
+    t=>t.includes("time"),
+    async()=>{
+      return {output:new Date().toISOString()};
+    }
+  ),
+
+  new Plugin(
+    "voice",
+    t=>t.includes("voice"),
+    async()=>{
+      voice();
+      return {output:"voice triggered"};
+    }
+  )
+
+];
+
+const agent = new Agent(memory,plugins);
+
+/* =========================
+   🚀 BOOT SEQUENCE
+========================= */
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("service-worker.js");
+}
+
+window.addEventListener("load",async()=>{
+
+  try{
+    if(!window._flutter?.loader)
+      throw new Error("Flutter missing");
+
+    await memory.init();
+    await identity.connect();
+
+    _flutter.loader.loadEntrypoint({
+      onEntrypointLoaded:async(engine)=>{
+        const app = await engine.initializeEngine();
+        await app.runApp();
+
+        setState(STATE.READY,"System Online");
+
+        const result = await agent.think("what time is it");
+        console.log("Agent:",result);
+
+        sync.send({status:"online"});
+      }
+    });
+
+  }catch(e){
+    console.error(e);
+    setState(STATE.ERROR,"Boot failed");
+  }
+
+});
+</script>
+
+</body>
+</html>
