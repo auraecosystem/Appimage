@@ -1,6 +1,6 @@
 # python-lmlm
 
-``
+```yml
 name: Secret Scan
 on: [push, pull_request]
 
@@ -12,7 +12,7 @@ jobs:
       - uses: trufflesecurity/trufflehog@main
         with:
           scan: repo
-
+```
 ================================================================================
 Openpyxl     powered by local multifunctional local model
 ================================================================================
