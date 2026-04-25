@@ -1,6 +1,3 @@
-:Openpyxl:     powered by local multifunctional local model
-================================================================================
-
 name: Secret Scan
 on: [push, pull_request]
 
@@ -24,7 +21,35 @@ Quick start overide all and rebuild
 ================================================================================
 
 .. code-block:: python
-  
+  import pandas as pd
+import os
+from pathlib import Path
+
+def load_excel(file_path):
+    """Load an Excel file, normalizing .xlsl to .xlsx extension."""
+    file_path = Path(file_path)
+    
+    # Handle .xlsl typo → .xlsx
+    if file_path.suffix == ".xlsl":
+        fixed_path = file_path.with_suffix(".xlsx")
+        if file_path.exists() and not fixed_path.exists():
+            file_path.rename(fixed_path)
+        file_path = fixed_path
+    
+    return pd.ExcelFile(file_path)
+
+def save_excel(writer_path, dfs: dict) -> None:
+    """Save DataFrames to Excel sheets, normalizing .xlsl to .xlsx extension."""
+    writer_path = Path(writer_path)
+    
+    # Normalize extension
+    if writer_path.suffix == ".xlsl":
+        writer_path = writer_path.with_suffix(".xlsx")
+    
+    with pd.ExcelWriter(writer_path, engine="openpyxl") as writer:
+        for sheet, df in dfs.items():
+            df.to_excel(writer, sheet_name=sheet, index=False)    
+
 python3 --version
 python3 -m pip install --upgrade pip
 python3 -m pip install virtualenv
@@ -41,9 +66,7 @@ cd myapp
 flask fab create-db
 pip install flask-jwt-extended psycopg2-binary
 
-                              ```https://domains.ip2whois.com/domains?qkey=0.0.0.0,8.8.8.8, 1.1.1.1="pypi-AgEIcHlwaS5vcmcCJGRmZmNhN2MxLTcwY2EtNGY5NS04ZjIxLWUzZDc2OWRiOWI4NwACKlszLCJmZTE2YmMzMC0xZWUyLTQ4OTktOTM2Yy0xMTUyMTk2MjE3YWMiXQAABiCj8njZJ7PgJnMJ-n9g4h0_fgkojUUwuOeEUeKE3aN7gw"
-
-                              conda install anaconda-client conda-build
+                                  conda install anaconda-client conda-build
 
 # Uploading and installing conda packages
 
