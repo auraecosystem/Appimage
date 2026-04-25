@@ -1,3 +1,4 @@
+```yaml
 name: Secret Scan
 on: [push, pull_request]
 
@@ -9,12 +10,11 @@ jobs:
       - uses: trufflesecurity/trufflehog@main
         with:
           scan: repo
-
 .. image:: 
    .. all-code-block:: 
    ..all-images
    :target: https://github.com/Web4application/Web4application.github.io
-
+```
 
 Quick start overide all and rebuild
   [Web4application.guthub.io](https://github.com/Web4application/Web4application.github.io)
@@ -675,7 +675,59 @@ Vite caches dependency requests via HTTP headers, so if you wish to locally edit
 Vite provides an [HMR API](./api-hmr) over native ESM. Frameworks with HMR capabilities can leverage the API to provide instant, precise updates without reloading the page or blowing away application state. Vite provides first-party HMR integrations for [Vue Single File Components](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue) and [React Fast Refresh](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react). There are also official integrations for Preact via [@prefresh/vite](https://github.com/JoviDeCroock/prefresh/tree/main/packages/vite).
 
 Note you don't need to manually set these up - when you [create an app via `create-vite`](./), the selected templates would have these pre-configured for you already.
+                                                   
+```.travis.yml
+                                         arch: arm64
+language: c
+compiler: gcc
+services:
+  - docker
+script: docker build -t my/test -f Dockerfile.arm64 .
+jobs:
+  include:
+   - os: linux
+     arch: amd64
+   - os: linux
+     arch: arm64
+   - os: linux
+     arch: arm64-graviton2
+     virt: lxd
+     group: edge
+language: c
+arch:
+  - amd64
+  - arm64  # please note arm64-graviton2 requires explicit virt: [lxd|vm] tag so it's recommended for jobs.include, see below
+  - ppc64le
+  - s390x
 
+compiler:
+  - gcc
+  - clang
+
+install: skip
+
+script:
+  - cd src
+  - make all
+
+install:
+          - sudo apt-get update
+          - sudo apt-get install apt-transport-https ca-certificates
+          - sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+          - echo "deb https://apt.dockerproject.org/repo ubuntu-precise main" | sudo tee /etc/apt/sources.list.d/docker.list
+          - sudo apt-get update
+          - sudo apt-get install docker-engine
+          - sudo docker pull ubuntu
+
+    script:
+          - sudo docker run ubuntu date
+
+install:
+          - sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+          - echo "deb https://apt.dockerproject.org/repo ubuntu-precise main" | sudo tee /etc/apt/sources.list.d/docker.list
+          - sudo apt-get update
+          - sudo apt-get install docker-engine
+```                                                  
 ## TypeScript
 
 Vite supports importing `.ts` files out of the box.
